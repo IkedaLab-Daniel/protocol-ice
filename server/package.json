@@ -14,11 +14,12 @@
     "nodejs",
     "mern"
   ],
-  "author": "",
+  "author": "Mark Daniel Callejas",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.4.5",
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "mongoose": "^8.19.3"
   },
   "devDependencies": {
     "morgan": "^1.10.0",
