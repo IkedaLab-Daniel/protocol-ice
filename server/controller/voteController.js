@@ -40,6 +40,26 @@ const createVote = async (req, res) => {
     }
 }
 
+// @desc    Get all votes with optional date filtering
+// @route   GET /api/votes
+// @access  Public
+const getVotes = async (req, res) => {
+    try {
+        const votes = await Vote.find();
+
+        res.json({
+            success: true,
+            data: votes
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+}
+
 module.exports = {
-    createVote
+     createVote,
+     getVotes
 }

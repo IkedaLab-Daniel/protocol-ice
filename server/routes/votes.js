@@ -2,14 +2,12 @@ const express = require('express');
 const router = express.Router();
 
 const {
-    createVote
+    createVote,
+    getVotes
 } = require('../controller/voteController');
 
 router.route('/')
-    .get((req, res) => {
-        res.json({ message: "/api/vote/ working"})
-        console.log("Working");
-    })
+    .get(getVotes)
     .post(createVote);
 
 module.exports = router;
