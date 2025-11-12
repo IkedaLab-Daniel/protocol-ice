@@ -2,6 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 
 const connectDB = require('./config/db');
+const votesRoute = require('./routes/votes');
 
 require('dotenv').config();
 
@@ -10,12 +11,10 @@ const app = express();
 
 app.use(morgan('dev'))
 
-app.listen(PORT, () => {
-    connectDB();
-    console.log(`Ready to build random sht`);
-});
-
 // > Routes
+// ? Vote Route
+app.use('/api/votes', votesRoute);
+
 // ? Health Check
 app.get('/health', (req, res) => {
     res.json({
@@ -41,3 +40,8 @@ app.use((req, res) => {
         message: 'Route not found'
     })
 })
+
+app.listen(PORT, () => {
+    connectDB();
+    console.log(`Ready to build random sht`);
+});
