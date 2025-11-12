@@ -11,6 +11,9 @@ const app = express();
 
 app.use(morgan('dev'))
 
+// > Middleware
+app.use(express.json());
+
 // > Routes
 // ? Vote Route
 app.use('/api/votes', votesRoute);
