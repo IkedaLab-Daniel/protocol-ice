@@ -4,7 +4,8 @@ const router = express.Router();
 const {
     createVote,
     getVotes,
-    getStats
+    getStats,
+    deleteVote
 } = require('../controller/voteController');
 
 router.route('/')
@@ -12,6 +13,9 @@ router.route('/')
     .post(createVote);
 
 router.route('/stats')
-    .get(getStats)
+    .get(getStats);
+
+router.route('/:id')
+    .delete(deleteVote);
 
 module.exports = router;

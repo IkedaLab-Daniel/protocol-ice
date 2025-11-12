@@ -145,8 +145,38 @@ const getStats = async (req, res) => {
     }
 }
 
+// @desc    Delete a vote
+// @route   DELETE /api/vote/:id
+// @access  Public
+const deleteVote = async (req, res) => {
+    try {
+        const vote = await Vote.findById(req.params.id);
+
+        if (!vote) {
+            return res.status(404).json({
+                success: false,
+                message: "Vote not found"
+            });
+        }
+
+        await vote.deleteOne();
+
+        res.status(200).json({
+            success: true,
+            message: 'Vote deleted successfully'
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            success: true,
+            message: error.message
+        })
+    }
+}
+
 module.exports = {
      createVote,
      getVotes,
-     getStats
+     getStats,
+     deleteVote
 }
