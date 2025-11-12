@@ -45,10 +45,22 @@ const createVote = async (req, res) => {
 // @access  Public
 const getVotes = async (req, res) => {
     try {
-        const votes = await Vote.find();
+        const { startDate, endDate } = req.query;
+
+        let query = {};
+        
+        // Filter by date range if provided
+        if (startDate || endDate) {
+            query.timestamp = {};
+            if (startDate) query.timestamp.$gte = new Date(startDate);
+            if (endDate) query.timestamp.$lte = new Date(endDate);
+        }
+
+        const votes = await Vote.find(query).sort({ timestamp: -1 });
 
         res.json({
             success: true,
+            count: votes.length,
             data: votes
         });
     } catch (error) {
