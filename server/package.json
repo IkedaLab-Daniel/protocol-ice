@@ -17,8 +17,10 @@
   "author": "Mark Daniel Callejas",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^3.0.3",
     "dotenv": "^16.4.5",
     "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.19.3"
   },
   "devDependencies": {
