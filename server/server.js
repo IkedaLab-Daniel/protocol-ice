@@ -3,6 +3,7 @@ const morgan = require('morgan');
 
 const connectDB = require('./config/db');
 const votesRoute = require('./routes/votes');
+const authRoute = require('./routes/auth')
 
 require('dotenv').config();
 
@@ -17,6 +18,8 @@ app.use(express.json());
 // > Routes
 // ? Vote Route
 app.use('/api/votes', votesRoute);
+// ? Auth Route
+app.use('/api/auth', authRoute);
 
 // ? Health Check
 app.get('/health', (req, res) => {
