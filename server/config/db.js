@@ -4,15 +4,30 @@ const connectDB = async () => {
     try {
         const conn = await mongoose.connect(process.env.MONGODB_URI);
         console.log(`
-        |---- MongoDB Connected: ${conn.connection.host} ----|
-        |                   ╱|、               |
-        |                 (˚ˎ 。7              |
-        |                  |、˜〵              |
-        |                 じしˍ,)ノ            |
-        |--------------------------------------|
+        ╔════════════════════════════════════════════╗
+        ║   ✨ MongoDB Connected Successfully! ✨    ║
+        ║                                            ║
+        ║            /\\_/\\                           ║
+        ║           ( o.o )   ~meow~                 ║
+        ║            > ^ <                           ║
+        ║           /|   |\\                          ║
+        ║          (_|   |_)                         ║
+        ║                                            ║
+        ║   Host: ${conn.connection.host.padEnd(31)}    ║
+        ╚════════════════════════════════════════════╝
         `);
     } catch (error) {
-        console.error(`Error connecting to database: ${error.message}`);
+       console.error(`
+        ╔════════════════════════════════════════════╗
+        ║   ❌ Database Connection Error ❌          ║
+        ║                                            ║
+        ║            /\\_/\\                           ║
+        ║           ( >.< )   *sad meow*             ║
+        ║            > ⌓ <                           ║
+        ║                                            ║
+        ║   ${error.message.padEnd(42)} ║
+        ╚════════════════════════════════════════════╝
+        `);
         process.exit(1);
     }
 }
