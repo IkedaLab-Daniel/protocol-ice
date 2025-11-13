@@ -71,7 +71,7 @@ const getVotes = async (req, res) => {
         });
     }
 }
-// @desc    Get vote statistics
+// @desc    Get user's votes statistics
 // @route   GET /api/votes/stats
 // @access  Private
 const getStats = async (req, res) => {
@@ -89,7 +89,9 @@ const getStats = async (req, res) => {
             startDate = new Date(0)
         }
 
+        // filter by user and date
         const votes = await Vote.find({
+            user: req.user.id,
             timestamp: { $gte: startDate }
         });
 
