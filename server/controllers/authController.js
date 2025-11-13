@@ -109,7 +109,27 @@ const login = async (req, res) => {
     }
 }
 
+// @desc    Get current logged-in user
+// @route   GET /api/auth/me
+// @access  Private
+const getMe = async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id)
+
+        res.json({
+            success: true,
+            data: user
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+}
+
 module.exports = {
     register,
-    login
+    login,
+    getMe
 }

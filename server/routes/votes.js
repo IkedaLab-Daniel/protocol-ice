@@ -6,7 +6,7 @@ const {
     getVotes,
     getStats,
     deleteVote
-} = require('../controller/voteController');
+} = require('../controllers/voteController');
 
 router.route('/')
     .get(getVotes)
