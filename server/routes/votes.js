@@ -5,17 +5,26 @@ const {
     createVote,
     getVotes,
     getStats,
-    deleteVote
+    deleteVote,
+    getMyVotes,
 } = require('../controllers/voteController');
 
+const {
+    protect,
+    protectAdmin
+} = require('../middlewares/auth');
+
 router.route('/')
-    .get(getVotes)
-    .post(createVote);
+    .get(protectAdmin, getVotes)
+    .post(protect, createVote);
+
+router.route('/my-votes')
+    .get(protect, getMyVotes)
 
 router.route('/stats')
-    .get(getStats);
+    .get(protect, getStats);
 
 router.route('/:id')
-    .delete(deleteVote);
+    .delete(protect, deleteVote);
 
 module.exports = router;

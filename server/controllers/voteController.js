@@ -2,7 +2,7 @@ const Vote = require('../models/Vote');
 
 // @desc    Create a new vote
 // @route   POST /api/votes
-// @access  Public
+// @access  Private
 const createVote = async (req, res) => {
     try {
         const { type, label, score } = req.body;
@@ -22,6 +22,7 @@ const createVote = async (req, res) => {
         }
 
         const vote = await Vote.create({
+            user: req.user.id,
             type,
             label: label || undefined,
             score: finalScore
@@ -42,7 +43,7 @@ const createVote = async (req, res) => {
 
 // @desc    Get all votes with optional date filtering
 // @route   GET /api/votes
-// @access  Public
+// @access  Private
 const getVotes = async (req, res) => {
     try {
         const { startDate, endDate } = req.query;
@@ -72,7 +73,7 @@ const getVotes = async (req, res) => {
 }
 // @desc    Get vote statistics
 // @route   GET /api/votes/stats
-// @access  Public
+// @access  Private
 const getStats = async (req, res) => {
     try {
         const { period = 'today'} = req.query;
@@ -147,7 +148,7 @@ const getStats = async (req, res) => {
 
 // @desc    Delete a vote
 // @route   DELETE /api/vote/:id
-// @access  Public
+// @access  Private
 const deleteVote = async (req, res) => {
     try {
         const vote = await Vote.findById(req.params.id);
@@ -156,6 +157,14 @@ const deleteVote = async (req, res) => {
             return res.status(404).json({
                 success: false,
                 message: "Vote not found"
+            });
+        }
+
+        // verify if user owns the vote to delete
+        if (vote.user.toString() !== req.user.id && req.user.role !== 'admin'){
+            return res.status(403).json({
+                success: false,
+                message: 'Not authorized to delete this vote'
             });
         }
 
@@ -174,9 +183,32 @@ const deleteVote = async (req, res) => {
     }
 }
 
+// @desc    Get user's own votes
+// @route   GET /api/votes/my-votes
+// @access  Private
+const getMyVotes = async (req, res) => {
+    try {
+        const votes = await Vote.find({ user: req.user.id })
+            .sort({ timestamp: -1 });
+        
+        res.json({
+            success: true,
+            count: votes.length,
+            data: votes
+        });
+
+    } catch (error) {
+        res.stats(500).json({
+            success: false,
+            message: error.message
+        })
+    }
+}
+
 module.exports = {
      createVote,
      getVotes,
      getStats,
-     deleteVote
+     deleteVote,
+     getMyVotes
 }
