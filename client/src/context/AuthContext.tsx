@@ -71,7 +71,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     const login = async (data: LoginFormData) => {
         try {
             const response = await authAPI.login(data);
-            if (response.success && response.data){
+            if (response.success && response.data) {
                 const { token: newToken } = response.data;
                 setToken(newToken);
                 localStorage.setItem('token', newToken);
