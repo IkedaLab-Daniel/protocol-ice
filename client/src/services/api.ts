@@ -7,6 +7,8 @@ import type {
     CreateVoteInput,
     User,
     Vote,
+    VoteStats,
+    StatsQueryParams,
 } from "../types";
 
 // > Axios instance with base configuration
@@ -81,7 +83,10 @@ export const voteAPI = {
     },
 
     // TODO getStats: async () --im not sure on params
-    
+    getStats: async (params?: StatsQueryParams): Promise<ApiResponse<VoteStats>> => {
+        const response = await api.get<ApiResponse<VoteStats>>('/votes/stats', { params });
+        return response.data;
+    },
 
     deleteVote: async (id: string): Promise<ApiResponse> => {
         const response = await api.delete<ApiResponse>(`/votes/${id}`);
