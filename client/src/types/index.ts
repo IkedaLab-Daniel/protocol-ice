@@ -23,7 +23,7 @@ export interface Vote {
   label?: string;
   score: number;  
   timestamp: string;
-   createdAt: string;
+  createdAt: string;
   updatedAt: string;
 }
 
