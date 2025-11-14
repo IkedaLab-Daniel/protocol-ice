@@ -1,6 +1,10 @@
 import axios from "axios";
 import type {
-    Vote
+    ApiResponse,
+    AuthUser,
+    LoginFormData,
+    RegisterFormData,
+    User,
 } from "../types";
 
 // > Axios instance with base configuration
@@ -25,4 +29,38 @@ api.interceptors.request.use(
     }
 );
 
+// > Request Interceptor -> handle 401 errors globally
+api.interceptors.response.use(
+    (response) => response,
+    (error) => {
+        if (error.response?.status === 401) {
+            // Clear the token
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            window.location.href = "/login";
+        }
+
+        return Promise.reject(error);
+    }
+);
+
 // > ============== AUTH API ==============
+
+export const authAPI = {
+    register: async (data: Omit<RegisterFormData, 'confirmPassword'>): Promise<ApiResponse<AuthUser>> => {
+        const response = await api.post<ApiResponse<AuthUser>>('/auth/register', data);
+        return response.data;
+    },
+
+    login: async (data: LoginFormData): Promise<ApiResponse<AuthUser>> => {
+        const response = await api.post<ApiResponse<AuthUser>>('/auth/login', data);
+        return response.data;
+    },
+
+    getMe: async (): Promise<ApiResponse<User>> => {
+        const response = await api.get<ApiResponse<User>>('/auth/me');
+        return response.data;
+    }
+
+
+}
