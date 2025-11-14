@@ -4,7 +4,9 @@ import type {
     AuthUser,
     LoginFormData,
     RegisterFormData,
+    CreateVoteInput,
     User,
+    Vote,
 } from "../types";
 
 // > Axios instance with base configuration
@@ -61,6 +63,32 @@ export const authAPI = {
         const response = await api.get<ApiResponse<User>>('/auth/me');
         return response.data;
     }
+}
 
+// > ============== VOTE API ==============
+
+export const voteAPI = {
+    createVote: async (data: CreateVoteInput): Promise<ApiResponse<Vote>> => {
+        const response = await api.post<ApiResponse<Vote>>('/vote', data);
+        return response.data;
+    },
+
+    // TODO: getAllVotes --admin
+
+    getMyVotes: async (): Promise<ApiResponse<Vote[]>> => {
+        const response = await api.get<ApiResponse<Vote[]>> ('/votes/my-votes');
+        return response.data;
+    },
+
+    // TODO getStats: async () --im not sure on params
+    
+
+    deleteVote: async (id: string): Promise<ApiResponse> => {
+        const response = await api.delete<ApiResponse>(`/votes/${id}`);
+        return response.data; // ? 
+    }
+    
 
 }
+
+export default api;
