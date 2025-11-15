@@ -7,7 +7,7 @@ function App() {
   return (
     <>
       <Button size='large' loading>Day 319</Button>
-      <Input placeholder='Test' error='Oh No' label='Hell nah' fullWidth />
+      <Input placeholder='Test' error='Oh No' label='Hell nah' fullWidth/>
     </>
   )
 }
