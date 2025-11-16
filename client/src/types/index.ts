@@ -72,7 +72,7 @@ export interface RegisterFormData {
 }
 
 // > Qury Parameters
-export interface VoteQueryPrams {
+export interface VoteQueryParams {
     startDate?: string;
     endDate?: string;
 }

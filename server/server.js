@@ -1,5 +1,6 @@
 const express = require('express');
 const morgan = require('morgan');
+const cors = require('cors');
 
 const connectDB = require('./config/db');
 const votesRoute = require('./routes/votes');
@@ -11,6 +12,12 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 
 app.use(morgan('dev'))
+
+// > CORS Configuration
+app.use(cors({
+    origin: process.env.CLIENT_URL || 'http://localhost:5173',
+    credentials: true
+}))
 
 // > Middleware
 app.use(express.json());

@@ -1,99 +1,114 @@
-import axios from "axios";
+import axios from 'axios';
 import type {
-    ApiResponse,
-    AuthUser,
-    LoginFormData,
-    RegisterFormData,
-    CreateVoteInput,
-    User,
-    Vote,
-    VoteStats,
-    StatsQueryParams,
-} from "../types";
+  ApiResponse,
+  AuthUser,
+  LoginFormData,
+  RegisterFormData,
+  User,
+  Vote,
+  CreateVoteInput,
+  VoteStats,
+  VoteQueryParams,
+  StatsQueryParams
+} from '../types';
 
-// > Axios instance with base configuration
+// Create axios instance with base configuration
 const api = axios.create({
-    baseURL: import.meta.env.VITE_API_URL || 'http://localhost:3000/api',
-    headers: {
-        'Content-Type': 'application/json',
-    },
+  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:3000/api',
+  headers: {
+    'Content-Type': 'application/json',
+  },
 });
 
-// > Request Interceptor -> Automatically add auth token
+// Request interceptor to add auth token
 api.interceptors.request.use(
-    (config) => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            config.headers.Authorization = `Bearer ${token}`;
-        }
-        return config
-    },
-    (error) => {
-        return Promise.reject(error);
+  (config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
     }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
 );
 
-// > Request Interceptor -> handle 401 errors globally
+// Response interceptor for error handling
 api.interceptors.response.use(
-    (response) => response,
-    (error) => {
-        if (error.response?.status === 401) {
-            // Clear the token
-            localStorage.removeItem('token');
-            localStorage.removeItem('user');
-            window.location.href = "/login";
-        }
-
-        return Promise.reject(error);
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      // Clear token and redirect to login
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      window.location.href = '/login';
     }
+    return Promise.reject(error);
+  }
 );
 
-// > ============== AUTH API ==============
+// ============= AUTH API =============
 
 export const authAPI = {
-    register: async (data: Omit<RegisterFormData, 'confirmPassword'>): Promise<ApiResponse<AuthUser>> => {
-        const response = await api.post<ApiResponse<AuthUser>>('/auth/register', data);
-        return response.data;
-    },
+  // Register new user
+  register: async (data: Omit<RegisterFormData, 'confirmPassword'>): Promise<ApiResponse<AuthUser>> => {
+    const response = await api.post<ApiResponse<AuthUser>>('/auth/register', data);
+    return response.data;
+  },
 
-    login: async (data: LoginFormData): Promise<ApiResponse<AuthUser>> => {
-        const response = await api.post<ApiResponse<AuthUser>>('/auth/login', data);
-        return response.data;
-    },
+  // Login user
+  login: async (data: LoginFormData): Promise<ApiResponse<AuthUser>> => {
+    const response = await api.post<ApiResponse<AuthUser>>('/auth/login', data);
+    return response.data;
+  },
 
-    getMe: async (): Promise<ApiResponse<User>> => {
-        const response = await api.get<ApiResponse<User>>('/auth/me');
-        return response.data;
-    }
-}
+  // Get current user
+  getMe: async (): Promise<ApiResponse<User>> => {
+    const response = await api.get<ApiResponse<User>>('/auth/me');
+    return response.data;
+  },
+};
 
-// > ============== VOTE API ==============
+// ============= VOTE API =============
 
 export const voteAPI = {
-    createVote: async (data: CreateVoteInput): Promise<ApiResponse<Vote>> => {
-        const response = await api.post<ApiResponse<Vote>>('/vote', data);
-        return response.data;
-    },
+  // Create a new vote
+  createVote: async (data: CreateVoteInput): Promise<ApiResponse<Vote>> => {
+    const response = await api.post<ApiResponse<Vote>>('/votes', data);
+    return response.data;
+  },
 
-    // TODO: getAllVotes --admin
+  // Get all votes (admin only)
+  getAllVotes: async (params?: VoteQueryParams): Promise<ApiResponse<Vote[]>> => {
+    const response = await api.get<ApiResponse<Vote[]>>('/votes', { params });
+    return response.data;
+  },
 
-    getMyVotes: async (): Promise<ApiResponse<Vote[]>> => {
-        const response = await api.get<ApiResponse<Vote[]>> ('/votes/my-votes');
-        return response.data;
-    },
+  // Get user's own votes
+  getMyVotes: async (): Promise<ApiResponse<Vote[]>> => {
+    const response = await api.get<ApiResponse<Vote[]>>('/votes/my-votes');
+    return response.data;
+  },
 
-    // TODO getStats: async () --im not sure on params
-    getStats: async (params?: StatsQueryParams): Promise<ApiResponse<VoteStats>> => {
-        const response = await api.get<ApiResponse<VoteStats>>('/votes/stats', { params });
-        return response.data;
-    },
+  // Get vote statistics
+  getStats: async (params?: StatsQueryParams): Promise<ApiResponse<VoteStats>> => {
+    const response = await api.get<ApiResponse<VoteStats>>('/votes/stats', { params });
+    return response.data;
+  },
 
-    deleteVote: async (id: string): Promise<ApiResponse> => {
-        const response = await api.delete<ApiResponse>(`/votes/${id}`);
-        return response.data; // ? 
-    }
-    
+  // Delete a vote
+  deleteVote: async (id: string): Promise<ApiResponse> => {
+    const response = await api.delete<ApiResponse>(`/votes/${id}`);
+    return response.data;
+  },
+};
 
-}
+// ============= HEALTH CHECK =============
+
+export const healthCheck = async (): Promise<ApiResponse> => {
+  const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/health`);
+  return response.data;
+};
 
 export default api;

@@ -1,66 +1,65 @@
-import './Auth.css'
-import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
-import { useState, type FormEvent } from "react";
-import Card from "../../components/Card/Card";
-import Input from "../../components/Input/Input";
-import Button from "../../components/Button/Button";
+import { useState, type FormEvent } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
+import Input from '../../components/Input/Input';
+import Button from '../../components/Button/Button';
+import Card from '../../components/Card/Card';
+import './Auth.css';
 
 const Login = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
-
+  
   const [formData, setFormData] = useState({
     username_email: '',
     password: '',
   });
-
+  
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [loading, setLoading] = useState<boolean>(false);
-  const [apiError, setApiError] = useState<string>('');
+  const [loading, setLoading] = useState(false);
+  const [apiError, setApiError] = useState('');
 
   const validateForm = (): boolean => {
     const newErrors: Record<string, string> = {};
 
     if (!formData.username_email.trim()) {
-      newErrors.username_email = "Username or Email is required";
+      newErrors.username_email = 'Username or email is required';
     }
 
     if (!formData.password) {
-      newErrors.password = "Password is required";
+      newErrors.password = 'Password is required';
     }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
-  }
+  };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setApiError('');
 
-    if (!validateForm) return;
+    if (!validateForm()) return;
 
     setLoading(true);
     try {
       await login(formData);
       navigate('/dashboard');
     } catch (error: any) {
-      setApiError(error.message || 'Login Failed');
+      setApiError(error.message || 'Login failed');
     } finally {
-        setLoading(false);
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <div className="auth-container">
       <Card className="auth-card">
-
         <div className="auth-header">
           <h1>Welcome Back</h1>
           <p>Sign in to your account</p>
         </div>
 
-        <form onSubmit={(e) => handleSubmit(e)} className="auth-form">
+        <form onSubmit={handleSubmit} className="auth-form">
           {apiError && <div className="error-banner">{apiError}</div>}
 
           <Input
@@ -68,11 +67,11 @@ const Login = () => {
             type="text"
             placeholder="Enter your username or email"
             value={formData.username_email}
-            onChange={(e) => 
-                setFormData({...formData, username_email: e.target.value})
+            onChange={(e) =>
+              setFormData({ ...formData, username_email: e.target.value })
             }
-            fullWidth
             error={errors.username_email}
+            fullWidth
           />
 
           <Input
@@ -95,15 +94,14 @@ const Login = () => {
         <div className="auth-footer">
           <p>
             Don't have an account?{' '}
-            <Link to='/register' className="auth-link">
-              Sign Up
+            <Link to="/register" className="auth-link">
+              Sign up
             </Link>
           </p>
         </div>
-
       </Card>
     </div>
-  )
-}
+  );
+};
 
 export default Login;
