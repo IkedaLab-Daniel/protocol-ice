@@ -1,3 +1,4 @@
+import './Auth.css'
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { useState, type FormEvent } from "react";
