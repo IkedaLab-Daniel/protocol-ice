@@ -57,9 +57,13 @@ const Register = () => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    e.stopPropagation();
+    
     setApiError('');
 
-    if (!validateForm()) return;
+    if (!validateForm()) {
+      return;
+    }
 
     setLoading(true);
     try {
@@ -67,7 +71,9 @@ const Register = () => {
       await register(registerData);
       navigate('/dashboard');
     } catch (error: any) {
-      setApiError(error.message || 'Registration failed');
+      console.error('Register error:', error);
+      const message = error.response?.data?.message || error.message || 'Registration failed. Please try again.';
+      setApiError(message);
     } finally {
       setLoading(false);
     }
@@ -81,7 +87,7 @@ const Register = () => {
           <p>Sign up to get started</p>
         </div>
 
-        <form onSubmit={(e) => handleSubmit(e)} className="auth-form">
+        <form onSubmit={handleSubmit} className="auth-form" noValidate>
           {apiError && <div className="error-banner">{apiError}</div>}
 
           <Input 
@@ -92,7 +98,7 @@ const Register = () => {
             onChange={(e) => 
               setFormData({ ...formData, username: e.target.value })
             }
-            error={errors.message}
+            error={errors.username}
             fullWidth
           />
 
