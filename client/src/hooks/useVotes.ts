@@ -8,7 +8,7 @@ export const useVotes = () => {
   const [error, setError] = useState<string | null>(null);
   
 
-  const fetchVotes = async () => {
+  const fetchMyVotes = async () => {
     setLoading(true);
     setError(null);
 
@@ -57,7 +57,7 @@ export const useVotes = () => {
     votes,
     loading,
     error,
-    fetchVotes,
+    fetchMyVotes,
     createVote,
     deleteVote
   };
