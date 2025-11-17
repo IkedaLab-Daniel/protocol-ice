@@ -13,10 +13,10 @@ const app = express();
 
 app.use(morgan('dev'))
 
-// > CORS Configuration
+// > CORS Configuration - Allow all origins
 app.use(cors({
-    origin: process.env.CLIENT_URL || 'http://localhost:5173',
-    credentials: true
+    origin: '*',
+    credentials: false
 }))
 
 // > Middleware
