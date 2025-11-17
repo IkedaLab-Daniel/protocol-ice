@@ -73,6 +73,39 @@ const Dashboard = () => {
     navigate('/login');
   };
 
+  // Calculate today's votes
+  const getTodayVotes = () => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    const todayVotes = votes.filter((vote) => {
+      const voteDate = new Date(vote.timestamp);
+      voteDate.setHours(0, 0, 0, 0);
+      return voteDate.getTime() === today.getTime();
+    });
+
+    const positive = todayVotes.filter((v) => v.type === 'positive');
+    const negative = todayVotes.filter((v) => v.type === 'negative');
+
+    // Use COUNT instead of SCORE for the bar visualization
+    const positiveCount = positive.length;
+    const negativeCount = negative.length;
+    const totalCount = positiveCount + negativeCount;
+
+    const positivePercent = totalCount > 0 ? (positiveCount / totalCount) * 100 : 0;
+    const negativePercent = totalCount > 0 ? (negativeCount / totalCount) * 100 : 0;
+
+    return {
+      positive: positiveCount,
+      negative: negativeCount,
+      positivePercent,
+      negativePercent,
+      total: todayVotes.length,
+    };
+  };
+
+  const todayStats = getTodayVotes();
+
   if (loading && votes.length === 0) {
     return <Loading fullScreen />;
   }
@@ -233,7 +266,56 @@ const Dashboard = () => {
         </div>
       )}
 
+      {/* Today's Vote Visualization */}
       <div className="dashboard-content">
+        <Card>
+          <div className="today-votes-section">
+            <h2>Today's Votes</h2>
+            <div className="today-stats-summary">
+              <div className="stat-item stat-positive">
+                <span className="stat-value">{todayStats.positive}</span>
+                <span className="stat-label">Positive</span>
+              </div>
+              <div className="stat-divider"></div>
+              <div className="stat-item stat-negative">
+                <span className="stat-value">{todayStats.negative}</span>
+                <span className="stat-label">Negative</span>
+              </div>
+            </div>
+            
+            {todayStats.total > 0 ? (
+              <div className="horizontal-bar-container">
+                <div className="bar-labels">
+                  <span className="bar-label-positive">+{todayStats.positive}</span>
+                  <span className="bar-label-negative">-{todayStats.negative}</span>
+                </div>
+                <div className="horizontal-bar">
+                  <div
+                    className="bar-segment bar-positive"
+                    style={{ width: `${todayStats.positivePercent}%` }}
+                  >
+                    {todayStats.positivePercent > 10 && (
+                      <span className="bar-percent">{Math.round(todayStats.positivePercent)}%</span>
+                    )}
+                  </div>
+                  <div
+                    className="bar-segment bar-negative"
+                    style={{ width: `${todayStats.negativePercent}%` }}
+                  >
+                    {todayStats.negativePercent > 10 && (
+                      <span className="bar-percent">{Math.round(todayStats.negativePercent)}%</span>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="no-votes-today">
+                <p>No votes recorded today. Start by adding your first vote!</p>
+              </div>
+            )}
+          </div>
+        </Card>
+
         <Card>
           <div className="votes-header">
             <h2>My Votes</h2>
