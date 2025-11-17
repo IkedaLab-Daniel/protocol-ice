@@ -38,4 +38,27 @@ export const useVotes = () => {
       throw new Error(message);
     }
   }
-}
+
+  const deleteVote = async (id: string) => {
+    setError(null);
+    try {
+      const response = await voteAPI.deleteVote(id);
+      if (response.success) {
+        setVotes((prev) => prev.filter((vote) => vote._id !== id));
+      }
+    } catch (error: any) {
+      const message = error.response?.data?.message || 'Failed to delete vote';
+      setError(message);
+      throw new Error(message);
+    }
+  };
+
+  return {
+    votes,
+    loading,
+    error,
+    fetchVotes,
+    createVote,
+    deleteVote
+  };
+};
