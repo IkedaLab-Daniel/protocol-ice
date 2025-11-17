@@ -9,19 +9,32 @@ import Button from '../../components/Button/Button';
 import Card from '../../components/Card/Card';
 import Input from '../../components/Input/Input';
 import { formatDate, formatScore } from '../../utils/helpers';
+import { Menu, X, ChevronUp, ChevronDown, Trash2 } from 'lucide-react';
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
   const { votes, loading, error, fetchMyVotes, createVote, deleteVote } = useVotes();
 
-  const [showForm, setShowForm] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [formData, setFormData] = useState<CreateVoteInput>({
     type: 'positive',
     label: '',
     score: 1,
   });
   const [submitting, setSubmitting] = useState(false);
+  const [celebration, setCelebration] = useState<'positive' | 'negative' | null>(null);
+
+  const openModal = (voteType: 'positive' | 'negative') => {
+    setFormData({ type: voteType, label: '', score: 1 });
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+    setFormData({ type: 'positive', label: '', score: 1 });
+  };
 
   useEffect(() => {
     fetchMyVotes();
@@ -32,8 +45,12 @@ const Dashboard = () => {
     setSubmitting(true);
     try {
       await createVote(formData);
-      setShowForm(false);
-      setFormData({ type: 'positive', label: '', score: 1 });
+      const voteType = formData.type;
+      closeModal();
+      
+      // Trigger celebration animation
+      setCelebration(voteType);
+      setTimeout(() => setCelebration(null), 3000);
     } catch (error: any) {
       // Error handled by the hook
     } finally {
@@ -63,65 +80,91 @@ const Dashboard = () => {
   return (
     <div className="dashboard-container">
       <div className="dashboard-header">
-        <div>
+        <div className="header-left">
           <h1>Dashboard</h1>
           <p>Welcome back, {user?.username}</p>
         </div>
-        <div className="header-actions">
-          <Button variant="secondary" onClick={() => navigate('/stats')}>
+
+        {/* Mobile Menu Toggle */}
+        <button
+          className="mobile-menu-toggle"
+          onClick={() => setShowMobileMenu(!showMobileMenu)}
+          aria-label="Toggle menu"
+        >
+          {showMobileMenu ? <X size={24} /> : <Menu size={24} />}
+        </button>
+
+        {/* Desktop & Mobile Menu */}
+        <div className={`header-actions ${showMobileMenu ? 'show' : ''}`}>
+          <Button
+            variant="secondary"
+            onClick={() => {
+              navigate('/stats');
+              setShowMobileMenu(false);
+            }}
+          >
             View Stats
           </Button>
-          <Button variant="danger" onClick={handleLogout}>
+          <Button
+            variant="danger"
+            onClick={() => {
+              handleLogout();
+              setShowMobileMenu(false);
+            }}
+          >
             Logout
           </Button>
         </div>
       </div>
 
-      <div className="dashboard-content">
-        <Card>
-          <div className="vote-header">
-            <h2>My Votes</h2>
-            <Button onClick={() => setShowForm(!showForm)}>
-              {showForm ? 'Cancel' : '+ Add Vote'}
-            </Button>
-          </div>
+      {/* Vote Action Buttons */}
+      <div className="vote-actions">
+        <button
+          className="vote-action-btn vote-action-positive"
+          onClick={() => openModal('positive')}
+        >
+          <ChevronUp size={48} strokeWidth={2.5} />
+          <span>Positive</span>
+        </button>
 
-          {showForm && (
+        <button
+          className="vote-action-btn vote-action-negative"
+          onClick={() => openModal('negative')}
+        >
+          <ChevronDown size={48} strokeWidth={2.5} />
+          <span>Negative</span>
+        </button>
+      </div>
+
+      {/* Vote Form Modal */}
+      {showModal && (
+        <div className="modal-overlay" onClick={closeModal}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h3>
+                Add {formData.type === 'positive' ? 'Positive' : 'Negative'} Vote
+              </h3>
+              <button className="modal-close" onClick={closeModal}>
+                <X size={24} />
+              </button>
+            </div>
+
             <form onSubmit={handleSubmit} className="vote-form">
-              <div className="form-row">
-                <div className="form-group">
-                  <label>Type</label>
-                  <select
-                    value={formData.type}
-                    onChange={(e) => {
-                      setFormData({
-                        ...formData,
-                        type: e.target.value as 'positive' | 'negative',
-                      });
-                    }}
-                    className="select-input"
-                  >
-                    <option value="positive">Positive</option>
-                    <option value="negative">Negative</option>
-                  </select>
-                </div>
-
-                <div className="form-group">
-                  <label>Score</label>
-                  <input
-                    type="number"
-                    min={1}
-                    max={5}
-                    value={formData.score}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        score: Number(e.target.value) || 1,
-                      })
-                    }
-                    className="number-input"
-                  />
-                </div>
+              <div className="form-group">
+                <label>Score</label>
+                <input
+                  type="number"
+                  min={1}
+                  max={5}
+                  value={formData.score}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      score: Number(e.target.value) || 1,
+                    })
+                  }
+                  className="number-input"
+                />
               </div>
 
               <Input
@@ -134,11 +177,67 @@ const Dashboard = () => {
                 }}
                 fullWidth
               />
-              <Button type="submit" loading={submitting} fullWidth>
-                Confirm
-              </Button>
+
+              <div className="modal-actions">
+                <Button
+                  type="button"
+                  variant="secondary"
+                  onClick={closeModal}
+                  disabled={submitting}
+                >
+                  Cancel
+                </Button>
+                <Button type="submit" loading={submitting}>
+                  Confirm
+                </Button>
+              </div>
             </form>
-          )}
+          </div>
+        </div>
+      )}
+
+      {/* Celebration Animation */}
+      {celebration && (
+        <div className={`celebration-overlay celebration-${celebration}`}>
+          <div className="celebration-content">
+            {celebration === 'positive' ? (
+              <>
+                <div className="celebration-icon">🎉</div>
+                <h2 className="celebration-text">Awesome!</h2>
+                <p className="celebration-subtext">Keep up the great work!</p>
+              </>
+            ) : (
+              <>
+                <div className="celebration-icon">💪</div>
+                <h2 className="celebration-text">Noted!</h2>
+                <p className="celebration-subtext">Tomorrow is a new day!</p>
+              </>
+            )}
+          </div>
+          <div className="confetti-container">
+            {[...Array(50)].map((_, i) => (
+              <div
+                key={i}
+                className="confetti"
+                style={{
+                  left: `${Math.random() * 100}%`,
+                  animationDelay: `${Math.random() * 0.5}s`,
+                  animationDuration: `${2 + Math.random() * 1}s`,
+                  backgroundColor: celebration === 'positive'
+                    ? ['#10b981', '#34d399', '#6ee7b7', '#fbbf24', '#f59e0b'][Math.floor(Math.random() * 5)]
+                    : ['#ef4444', '#f87171', '#fca5a5', '#a855f7', '#c084fc'][Math.floor(Math.random() * 5)]
+                }}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+
+      <div className="dashboard-content">
+        <Card>
+          <div className="votes-header">
+            <h2>My Votes</h2>
+          </div>
 
           {error && <div className="error-message">{error}</div>}
 
@@ -170,13 +269,13 @@ const Dashboard = () => {
                     </div>
                   </div>
 
-                  <Button
-                    variant="danger"
-                    size="small"
+                  <button
+                    className="delete-icon-btn"
                     onClick={() => handleDelete(vote._id)}
+                    aria-label="Delete vote"
                   >
-                    Delete
-                  </Button>
+                    <Trash2 size={20} />
+                  </button>
                 </div>
               ))}
             </div>
