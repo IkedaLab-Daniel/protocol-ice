@@ -2,6 +2,21 @@
   publish = "dist"
   command = "npm run build"
 
+# Proxy API requests to EC2 backend
+[[redirects]]
+  from = "/api/*"
+  to = "http://3.106.244.87:3000/api/:splat"
+  status = 200
+  force = true
+
+# Proxy health check endpoint
+[[redirects]]
+  from = "/health"
+  to = "http://3.106.244.87:3000/health"
+  status = 200
+  force = true
+
+# SPA fallback - must be last
 [[redirects]]
   from = "/*"
   to = "/index.html"
