@@ -2,8 +2,10 @@ import { Navigate, Route, BrowserRouter, Routes } from 'react-router-dom'
 import './App.css'
 import { AuthProvider } from './context/AuthContext'
 import PublicRoute from './components/PublicRoute/PublicRoute'
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute'
 import Login from './pages/Auth/Login'
 import Register from './pages/Auth/Register'
+import Dashboard from './pages/Dashboard/Dashboard'
 
 function App() {
 
@@ -29,23 +31,22 @@ function App() {
             }
           />
 
-          {/* Protected Rotues Here */}
+          {/* Protected Routes Here */}
           <Route 
             path='/dashboard'
             element={
-              <PublicRoute>
-                {/* TODO: Dashboard */}
-                <Login />  
-              </PublicRoute>
+              <ProtectedRoute>
+                <Dashboard />  
+              </ProtectedRoute>
             }
           />
           <Route 
             path='/stats'
             element={
-              <PublicRoute>
+              <ProtectedRoute>
                 {/* TODO: Stats */}
-                <Login />  
-              </PublicRoute>
+                <div>Stats Page</div>  
+              </ProtectedRoute>
             }
           />
 
