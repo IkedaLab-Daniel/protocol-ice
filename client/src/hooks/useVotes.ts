@@ -1,5 +1,5 @@
 import { useState } from "react"
-import type { Vote } from "../types";
+import type { CreateVoteInput, Vote } from "../types";
 import { voteAPI } from "../services/api";
 
 export const useVotes = () => {
@@ -21,6 +21,21 @@ export const useVotes = () => {
       setError(error.response?.data?.message || 'Failed to fetch votes');
     } finally {
       setLoading(false)
+    }
+  }
+
+  const createVote = async (data: CreateVoteInput) => {
+    setError(null);
+    try {
+      const response = await voteAPI.createVote(data);
+      if (response.success && response.data) {
+        setVotes((prev) => [response.data!, ...prev]);
+        return response.data;
+      }
+    } catch (error: any) {
+      const message = error.response?.data?.message || ' Failed to create vote';
+      setError(message);
+      throw new Error(message);
     }
   }
 }
