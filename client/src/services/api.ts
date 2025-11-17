@@ -14,7 +14,7 @@ import type {
 
 // Create axios instance with base configuration
 const api = axios.create({
-  baseURL: '/api', // Use relative URL - Netlify will proxy to EC2
+  baseURL: import.meta.env.VITE_API_URL || 'https://3.106.244.87/api',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -110,7 +110,7 @@ export const voteAPI = {
 // ============= HEALTH CHECK =============
 
 export const healthCheck = async (): Promise<ApiResponse> => {
-  const response = await axios.get('/health'); // Use relative URL
+  const response = await axios.get(`${import.meta.env.VITE_API_URL || 'https://3.106.244.87'}/health`);
   return response.data;
 };
 
