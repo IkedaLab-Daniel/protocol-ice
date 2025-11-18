@@ -8,6 +8,7 @@ import Button from "../../components/Button/Button";
 import Card from "../../components/Card/Card";
 import { TrendingUp, ThumbsUp, ThumbsDown, Vote } from "lucide-react";
 import ThemeToggle from "../../components/ThemeToggle/ThemeToggle";
+import protocol_ice from '../../assets/protocol-ice.png'
 import './Stats.css'
 
 const Stats = () => {
@@ -41,7 +42,10 @@ const Stats = () => {
     <div className="stats-container page-container">
       <div className="stats-header">
         <div>
-          <h1>Statistics</h1>
+          <div className="icon-logo">
+            <img src={protocol_ice} alt="" />
+            <h1>Statistics</h1>
+          </div>
           <p>Your voting insights and analytics</p>
         </div>
         <div className="stats-header-actions">

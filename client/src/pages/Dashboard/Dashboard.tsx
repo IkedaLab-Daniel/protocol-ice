@@ -11,6 +11,7 @@ import Input from '../../components/Input/Input';
 import { formatDate, formatScore } from '../../utils/helpers';
 import { Menu, X, ChevronUp, ChevronDown, Trash2 } from 'lucide-react';
 import ThemeToggle from '../../components/ThemeToggle/ThemeToggle';
+import protocol_ice from '../../assets/protocol-ice.png'
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -117,7 +118,10 @@ const Dashboard = () => {
     <div className="dashboard-container page-container">
       <div className="dashboard-header">
         <div className="header-left">
-          <h1>Dashboard</h1>
+          <div className="icon-logo">
+            <img src={protocol_ice} alt="" />
+            <h1>Protocol Ice</h1>
+          </div>
           <p>Welcome back, {user?.username}</p>
         </div>
 

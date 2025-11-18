@@ -31,6 +31,16 @@
   flex: 1;
 }
 
+.header-left .icon-logo{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-left .icon-logo img{
+  width: 4rem;
+}
+
 .dashboard-header h1 {
   font-size: 2rem;
   font-weight: 700;

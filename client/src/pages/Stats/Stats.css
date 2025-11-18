@@ -13,6 +13,16 @@
   gap: 1rem;
 }
 
+.icon-logo{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.icon-logo img{
+  width: 4rem;
+}
+
 .stats-header-actions {
   display: flex;
   align-items: center;
