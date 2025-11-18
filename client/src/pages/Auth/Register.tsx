@@ -1,5 +1,6 @@
 import './Auth.css'
 import { Link, useNavigate } from "react-router-dom";
+import { UserPlus, User, Mail, Lock, LockKeyhole } from 'lucide-react';
 import { useAuth } from "../../context/AuthContext";
 import { useState, type FormEvent } from "react";
 import { isValidEmail, isValidPassword, isValidUsername } from "../../utils/helpers";
@@ -87,8 +88,11 @@ const Register = () => {
       </div>
       <Card className="auth-card">
         <div className="auth-header">
-          <h1>Create Account</h1>
-          <p>Sign up to get started</p>
+          <div className="auth-logo">
+            <img src="/protocol-ice.png" alt="Protocol Ice" />
+          </div>
+          <h1>Protocol Ice</h1>
+          <p className="auth-subtitle">Create Account</p>
         </div>
 
         <form onSubmit={handleSubmit} className="auth-form" noValidate>
@@ -103,6 +107,7 @@ const Register = () => {
               setFormData({ ...formData, username: e.target.value })
             }
             error={errors.username}
+            icon={<User size={16} />}
             fullWidth
           />
 
@@ -115,6 +120,7 @@ const Register = () => {
               setFormData({ ...formData, email: e.target.value })
             }
             error={errors.email}
+            icon={<Mail size={16} />}
             fullWidth
           />
 
@@ -127,6 +133,7 @@ const Register = () => {
               setFormData({ ...formData, password: e.target.value })
             }
             error={errors.password}
+            icon={<Lock size={16} />}
             fullWidth
           />
 
@@ -139,10 +146,12 @@ const Register = () => {
               setFormData({ ...formData, confirmPassword: e.target.value })
             }
             error={errors.confirmPassword}
+            icon={<LockKeyhole size={16} />}
             fullWidth
           />
 
           <Button type="submit" fullWidth loading={loading}>
+            <UserPlus size={18} />
             Sign Up
           </Button>
         </form>
@@ -154,11 +163,11 @@ const Register = () => {
               Sign In
             </Link>
           </p>
-          <p>
-            <Link to="/about" className="auth-link">
-              Learn more about Protocol Ice
-            </Link>
-          </p>
+        </div>
+        <div className="auth-learn-more">
+          <Link to="/about" className="auth-link">
+            Learn more about Protocol Ice
+          </Link>
         </div>
       </Card>
     </div>

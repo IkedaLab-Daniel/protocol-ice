@@ -26,11 +26,38 @@
   margin-bottom: 2rem;
 }
 
+.auth-logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.auth-logo img {
+  width: 5rem;
+  height: 5rem;
+  animation: logoFloat 3s ease-in-out infinite;
+}
+
+@keyframes logoFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
 .auth-header h1 {
   font-size: 2rem;
   font-weight: 700;
   color: var(--text-primary);
   margin-bottom: 0.5rem;
+}
+
+.auth-subtitle {
+  font-size: 1.125rem;
+  color: var(--text-secondary);
+  font-weight: 500;
 }
 
 .auth-header p {
@@ -57,6 +84,13 @@
 
 .auth-link:hover {
   color: #764ba2;
+}
+
+.auth-learn-more {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+  text-align: center;
 }
 
 .error-banner {

@@ -12,6 +12,21 @@
   font-size: 0.875rem;
   font-weight: 500;
   color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.input-label-icon {
+  display: flex;
+  align-items: center;
+  color: var(--text-secondary);
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .input {
@@ -21,6 +36,7 @@
   color: var(--text-primary);
   border-radius: 8px;
   transition: all 0.2s ease;
+  width: 100%;
 }
 
 .input:focus {
@@ -37,4 +53,26 @@
 .input-error-message {
     font-size: 0.875rem;
     color: #dc3545;
+}
+
+.input-toggle-password {
+  position: absolute;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 0.25rem;
+  transition: color 0.2s ease;
+}
+
+.input-toggle-password:hover {
+  color: var(--text-primary);
+}
+
+.input-toggle-password:focus {
+  outline: none;
+  color: #667eea;
 }

@@ -56,7 +56,7 @@ const Stats = () => {
           </Button>
           <Button variant="secondary" onClick={() => navigate('/dashboard')}>
             <Home size={18} />
-            Back to Dashboard
+            Dashboard
           </Button>
         </div>
       </div>

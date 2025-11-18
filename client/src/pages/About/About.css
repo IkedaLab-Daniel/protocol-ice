@@ -1,9 +1,31 @@
 .about-container {
   min-height: 100vh;
   padding: 2rem;
+  padding-bottom: 6rem;
   position: relative;
   background: var(--grid-background);
   background-blend-mode: overlay;
+}
+
+.about-sticky-cta {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, var(--bg-primary) 70%, transparent);
+  padding: 1.5rem 2rem;
+  z-index: 10;
+  backdrop-filter: blur(10px);
+  border-top: 1px solid var(--border-color);
+}
+
+.about-sticky-cta-content {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .about-theme-toggle {
@@ -205,24 +227,6 @@
   margin: 0;
 }
 
-.about-cta {
-  background: linear-gradient(135deg, var(--bg-primary), var(--bg-secondary));
-  border: 3px solid var(--border-color);
-}
-
-.about-cta h2 {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-}
-
-.cta-buttons {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-  margin-top: 2rem;
-  flex-wrap: wrap;
-}
-
 .about-quote {
   text-align: center;
   padding: 2rem;
@@ -259,6 +263,16 @@
 @media (max-width: 768px) {
   .about-container {
     padding: 1rem;
+    padding-bottom: 6rem;
+  }
+
+  .about-sticky-cta {
+    padding: 1rem;
+  }
+
+  .about-sticky-cta-content {
+    flex-direction: column;
+    align-items: stretch;
   }
 
   .about-theme-toggle {
@@ -291,15 +305,6 @@
   .features-grid {
     grid-template-columns: 1fr;
     gap: 1rem;
-  }
-
-  .about-cta h2 {
-    font-size: 1.5rem;
-  }
-
-  .cta-buttons {
-    flex-direction: column;
-    align-items: stretch;
   }
 
   .about-quote blockquote {

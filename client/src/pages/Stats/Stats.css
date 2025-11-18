@@ -356,11 +356,31 @@
 @media (max-width: 768px) {
   .stats-container {
     padding: 1rem;
+    padding-bottom: 6rem;
   }
 
   .stats-header {
     flex-direction: column;
     align-items: flex-start;
+    margin-bottom: 1rem;
+  }
+
+  .stats-header > div:first-child {
+    width: 100%;
+  }
+
+  .stats-header-actions{
+    position: fixed;
+    bottom: 1rem;
+    left: 1rem;
+    right: 1rem;
+    z-index: 100;
+    background: var(--bg-primary);
+    padding: 0.75rem;
+    border-radius: 16px;
+    border: 2px solid var(--border-color);
+    box-shadow: 0 -4px 12px var(--shadow-color-md);
+    justify-content: center;
   }
 
   .period-selector {

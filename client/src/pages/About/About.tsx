@@ -13,12 +13,13 @@ const About = () => {
   const { isAuthenticated } = useAuth();
 
   return (
-    <div className="about-container page-container">
-      <div className="about-theme-toggle">
-        <ThemeToggle />
-      </div>
+    <>
+      <div className="about-container page-container">
+        <div className="about-theme-toggle">
+          <ThemeToggle />
+        </div>
 
-      <div className="about-content">
+        <div className="about-content">
         <div className="about-header">
           <div className="about-logo">
             <img src={protocol_ice} alt="Protocol Ice" />
@@ -96,33 +97,6 @@ const About = () => {
           </div>
         </Card>
 
-        <Card className="about-card about-cta">
-          <div className="about-section">
-            <h2>Start Voting for Your Future Self</h2>
-            <p>
-              Every habit is a vote. The more you vote, the stronger your identity becomes. 
-              Start tracking your actions today and watch as small votes compound into remarkable results.
-            </p>
-            <div className="cta-buttons">
-              {isAuthenticated ? (
-                <Button onClick={() => navigate('/dashboard')}>
-                  <Home size={18} />
-                  Back to Dashboard
-                </Button>
-              ) : (
-                <>
-                  <Button onClick={() => navigate('/register')}>
-                    Get Started
-                  </Button>
-                  <Button variant="secondary" onClick={() => navigate('/login')}>
-                    Sign In
-                  </Button>
-                </>
-              )}
-            </div>
-          </div>
-        </Card>
-
         <div className="about-quote">
           <blockquote>
             "Every action you take is a vote for the type of person you wish to become. 
@@ -131,7 +105,28 @@ const About = () => {
           <cite>— James Clear, Atomic Habits</cite>
         </div>
       </div>
-    </div>
+      </div>
+
+      <div className="about-sticky-cta">
+        <div className="about-sticky-cta-content">
+          {isAuthenticated ? (
+            <Button onClick={() => navigate('/dashboard')}>
+              <Home size={18} />
+              Back to Dashboard
+            </Button>
+          ) : (
+            <>
+              <Button onClick={() => navigate('/register')}>
+                Get Started
+              </Button>
+              <Button variant="secondary" onClick={() => navigate('/login')}>
+                Sign In
+              </Button>
+            </>
+          )}
+        </div>
+      </div>
+    </>
   );
 };
 

@@ -141,22 +141,22 @@ const Dashboard = () => {
           <Button
             variant="secondary"
             onClick={() => {
-              navigate('/about');
-              setShowMobileMenu(false);
-            }}
-          >
-            <Info size={18} />
-            About
-          </Button>
-          <Button
-            variant="secondary"
-            onClick={() => {
               navigate('/stats');
               setShowMobileMenu(false);
             }}
           >
             <BarChart3 size={18} />
             View Stats
+          </Button>
+          <Button
+            variant="secondary"
+            onClick={() => {
+              navigate('/about');
+              setShowMobileMenu(false);
+            }}
+          >
+            <Info size={18} />
+            About
           </Button>
           <Button
             variant="danger"
