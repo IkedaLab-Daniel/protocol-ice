@@ -102,6 +102,11 @@ const Login = () => {
               Sign up
             </Link>
           </p>
+          <p>
+            <Link to="/about" className="auth-link">
+              Learn more about Protocol Ice
+            </Link>
+          </p>
         </div>
       </Card>
     </div>

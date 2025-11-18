@@ -9,6 +9,7 @@ import Login from './pages/Auth/Login'
 import Register from './pages/Auth/Register'
 import Dashboard from './pages/Dashboard/Dashboard'
 import Stats from './pages/Stats/Stats'
+import About from './pages/About/About'
 import Footer from './components/Footer/Footer'
 
 function ScrollToTop() {
@@ -34,6 +35,14 @@ function App() {
           <div className="app-layout">
             <Routes>
             {/* Public Routes Here */}
+            <Route 
+              path='/about'
+              element={
+                <PublicRoute>
+                  <About />
+                </PublicRoute>
+              }
+            />
             <Route 
               path='/login'
               element={

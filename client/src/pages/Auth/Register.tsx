@@ -154,6 +154,11 @@ const Register = () => {
               Sign In
             </Link>
           </p>
+          <p>
+            <Link to="/about" className="auth-link">
+              Learn more about Protocol Ice
+            </Link>
+          </p>
         </div>
       </Card>
     </div>
