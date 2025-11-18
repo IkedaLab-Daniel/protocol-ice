@@ -38,7 +38,7 @@ export interface VoteStats {
     totalScore: number;
     positiveCount: number;
     negativeCount: number;
-    labelCount: Record<string, number>;
+    labelCounts: Record<string, number>;
     totalVotes: number;
     dailyBreakdown: DailyStats[];
 }
