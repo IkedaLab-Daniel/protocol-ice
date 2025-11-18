@@ -6,6 +6,7 @@ import { isValidEmail, isValidPassword, isValidUsername } from "../../utils/help
 import Card from "../../components/Card/Card";
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
+import ThemeToggle from "../../components/ThemeToggle/ThemeToggle";
 
 
 const Register = () => {
@@ -81,6 +82,9 @@ const Register = () => {
 
   return (
     <div className="auth-container page-container">
+      <div className="auth-theme-toggle">
+        <ThemeToggle />
+      </div>
       <Card className="auth-card">
         <div className="auth-header">
           <h1>Create Account</h1>

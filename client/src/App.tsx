@@ -2,6 +2,7 @@ import { Navigate, Route, BrowserRouter, Routes, useLocation } from 'react-route
 import { useEffect } from 'react'
 import './App.css'
 import { AuthProvider } from './context/AuthContext'
+import { ThemeProvider } from './context/ThemeContext'
 import PublicRoute from './components/PublicRoute/PublicRoute'
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute'
 import Login from './pages/Auth/Login'
@@ -27,10 +28,11 @@ function App() {
 
   return (
     <BrowserRouter>
-      <AuthProvider>
-        <ScrollToTop />
-        <div className="app-layout">
-          <Routes>
+      <ThemeProvider>
+        <AuthProvider>
+          <ScrollToTop />
+          <div className="app-layout">
+            <Routes>
             {/* Public Routes Here */}
             <Route 
               path='/login'
@@ -70,10 +72,11 @@ function App() {
             {/* Default Rotues */}
             <Route path='/' element={<Navigate to="/dashboard" replace />} />
             <Route path='*' element={<Navigate to="/dashboard" replace />} />
-          </Routes>
-          <Footer />
-        </div>
-      </AuthProvider>
+            </Routes>
+            <Footer />
+          </div>
+        </AuthProvider>
+      </ThemeProvider>
     </BrowserRouter>
   )
 }

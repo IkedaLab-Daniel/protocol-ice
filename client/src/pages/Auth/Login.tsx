@@ -4,6 +4,7 @@ import { useAuth } from '../../context/AuthContext';
 import Input from '../../components/Input/Input';
 import Button from '../../components/Button/Button';
 import Card from '../../components/Card/Card';
+import ThemeToggle from '../../components/ThemeToggle/ThemeToggle';
 import './Auth.css';
 
 const Login = () => {
@@ -53,6 +54,9 @@ const Login = () => {
 
   return (
     <div className="auth-container page-container">
+      <div className="auth-theme-toggle">
+        <ThemeToggle />
+      </div>
       <Card className="auth-card">
         <div className="auth-header">
           <h1>Welcome Back</h1>
