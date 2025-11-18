@@ -87,17 +87,19 @@ const Dashboard = () => {
     const positive = todayVotes.filter((v) => v.type === 'positive');
     const negative = todayVotes.filter((v) => v.type === 'negative');
 
-    // Use COUNT instead of SCORE for the bar visualization
-    const positiveCount = positive.length;
-    const negativeCount = negative.length;
-    const totalCount = positiveCount + negativeCount;
+    // Calculate total scores (weighted by vote score 1-5)
+    const positiveScore = positive.reduce((sum, v) => sum + v.score, 0);
+    const negativeScore = negative.reduce((sum, v) => sum + v.score, 0);
+    const totalScore = positiveScore + negativeScore;
 
-    const positivePercent = totalCount > 0 ? (positiveCount / totalCount) * 100 : 0;
-    const negativePercent = totalCount > 0 ? (negativeCount / totalCount) * 100 : 0;
+    const positivePercent = totalScore > 0 ? (positiveScore / totalScore) * 100 : 0;
+    const negativePercent = totalScore > 0 ? (negativeScore / totalScore) * 100 : 0;
 
     return {
-      positive: positiveCount,
-      negative: negativeCount,
+      positive: positive.length,
+      negative: negative.length,
+      positiveScore,
+      negativeScore,
       positivePercent,
       negativePercent,
       total: todayVotes.length,
@@ -286,8 +288,8 @@ const Dashboard = () => {
             {todayStats.total > 0 ? (
               <div className="horizontal-bar-container">
                 <div className="bar-labels">
-                  <span className="bar-label-positive">+{todayStats.positive}</span>
-                  <span className="bar-label-negative">-{todayStats.negative}</span>
+                  <span className="bar-label-positive">+{todayStats.positiveScore}</span>
+                  <span className="bar-label-negative">{todayStats.negativeScore}</span>
                 </div>
                 <div className="horizontal-bar">
                   <div
