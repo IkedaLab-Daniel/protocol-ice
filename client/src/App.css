@@ -1,3 +1,10 @@
+/* App Layout */
+.app-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
 /* Page transition animations */
 @keyframes fadeIn {
   from {
@@ -12,6 +19,7 @@
 
 .page-container {
   animation: fadeIn 0.3s ease-out;
+  flex: 1;
 }
 
 /* Smooth transitions for all interactive elements */

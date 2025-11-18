@@ -8,6 +8,7 @@ import Login from './pages/Auth/Login'
 import Register from './pages/Auth/Register'
 import Dashboard from './pages/Dashboard/Dashboard'
 import Stats from './pages/Stats/Stats'
+import Footer from './components/Footer/Footer'
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -28,47 +29,50 @@ function App() {
     <BrowserRouter>
       <AuthProvider>
         <ScrollToTop />
-        <Routes>
-          {/* Public Routes Here */}
-          <Route 
-            path='/login'
-            element={
-              <PublicRoute>
-                <Login />
-              </PublicRoute>
-            }
-          />
-          <Route 
-            path='/register'
-            element={
-              <PublicRoute>
-                <Register />
-              </PublicRoute>
-            }
-          />
+        <div className="app-layout">
+          <Routes>
+            {/* Public Routes Here */}
+            <Route 
+              path='/login'
+              element={
+                <PublicRoute>
+                  <Login />
+                </PublicRoute>
+              }
+            />
+            <Route 
+              path='/register'
+              element={
+                <PublicRoute>
+                  <Register />
+                </PublicRoute>
+              }
+            />
 
-          {/* Protected Routes Here */}
-          <Route 
-            path='/dashboard'
-            element={
-              <ProtectedRoute>
-                <Dashboard />  
-              </ProtectedRoute>
-            }
-          />
-          <Route 
-            path='/stats'
-            element={
-              <ProtectedRoute>
-                <Stats />
-              </ProtectedRoute>
-            }
-          />
+            {/* Protected Routes Here */}
+            <Route 
+              path='/dashboard'
+              element={
+                <ProtectedRoute>
+                  <Dashboard />  
+                </ProtectedRoute>
+              }
+            />
+            <Route 
+              path='/stats'
+              element={
+                <ProtectedRoute>
+                  <Stats />
+                </ProtectedRoute>
+              }
+            />
 
-          {/* Default Rotues */}
-          <Route path='/' element={<Navigate to="/dashboard" replace />} />
-          <Route path='*' element={<Navigate to="/dashboard" replace />} />
-        </Routes>
+            {/* Default Rotues */}
+            <Route path='/' element={<Navigate to="/dashboard" replace />} />
+            <Route path='*' element={<Navigate to="/dashboard" replace />} />
+          </Routes>
+          <Footer />
+        </div>
       </AuthProvider>
     </BrowserRouter>
   )
