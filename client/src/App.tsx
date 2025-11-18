@@ -6,6 +6,7 @@ import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute'
 import Login from './pages/Auth/Login'
 import Register from './pages/Auth/Register'
 import Dashboard from './pages/Dashboard/Dashboard'
+import Stats from './pages/Stats/Stats'
 
 function App() {
 
@@ -44,8 +45,7 @@ function App() {
             path='/stats'
             element={
               <ProtectedRoute>
-                {/* TODO: Stats */}
-                <div>Stats Page</div>  
+                <Stats />
               </ProtectedRoute>
             }
           />

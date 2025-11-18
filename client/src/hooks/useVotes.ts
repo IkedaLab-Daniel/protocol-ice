@@ -1,5 +1,5 @@
-import { useState } from "react"
-import type { CreateVoteInput, Vote } from "../types";
+import { useEffect, useState } from "react"
+import type { CreateVoteInput, StatsQueryParams, Vote, VoteStats } from "../types";
 import { voteAPI } from "../services/api";
 
 export const useVotes = () => {
@@ -62,3 +62,35 @@ export const useVotes = () => {
     deleteVote
   };
 };
+
+export const useStats = (params?: StatsQueryParams) => {
+  const [stats, setStats] = useState<VoteStats | null>(null);
+  const [loading, setLaoding] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchStats = async (queryParams?: StatsQueryParams) => {
+    setLaoding(true);
+    setError(null);
+    try {
+      const response = await voteAPI.getStats(queryParams || params);
+      if (response.success && response.data) {
+        setStats(response.data);
+      }
+    } catch (error: any) {
+      setError(error.response?.data?.message || 'Failed to fetch statistics');
+    } finally {
+      setLaoding(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchStats();
+  }, [params?.period]);
+
+  return {
+    stats,
+    loading,
+    error,
+    refetch: fetchStats
+  }
+}
