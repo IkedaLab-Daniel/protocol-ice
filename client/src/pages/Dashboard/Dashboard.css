@@ -495,7 +495,12 @@
   font-size: 1.5rem;
   font-weight: 600;
   color: var(--text-primary);
-  display: inline;
+}
+
+.votes-footer {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 2px solid var(--border-color);
 }
 
 .vote-form {

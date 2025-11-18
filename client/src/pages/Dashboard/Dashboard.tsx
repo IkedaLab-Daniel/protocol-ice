@@ -27,6 +27,7 @@ const Dashboard = () => {
   });
   const [submitting, setSubmitting] = useState(false);
   const [celebration, setCelebration] = useState<'positive' | 'negative' | null>(null);
+  const [showAllVotes, setShowAllVotes] = useState(false);
 
   const openModal = (voteType: 'positive' | 'negative') => {
     setFormData({ type: voteType, label: '', score: 1 });
@@ -365,39 +366,53 @@ const Dashboard = () => {
               <p>No votes yet. Create your first vote!</p>
             </div>
           ) : (
-            <div className="votes-list">
-              {votes.map((vote) => (
-                <div key={vote._id} className="vote-item">
-                  <div className="vote-content">
-                    <div className="vote-info">
-                      <span className={`vote-badge vote-badge-${vote.type}`}>
-                        {vote.type}
-                      </span>
-                      {vote.label && (
-                        <span className="vote-label">{vote.label}</span>
-                      )}
+            <>
+              <div className="votes-list">
+                {(showAllVotes ? votes : votes.slice(0, 5)).map((vote) => (
+                  <div key={vote._id} className="vote-item">
+                    <div className="vote-content">
+                      <div className="vote-info">
+                        <span className={`vote-badge vote-badge-${vote.type}`}>
+                          {vote.type}
+                        </span>
+                        {vote.label && (
+                          <span className="vote-label">{vote.label}</span>
+                        )}
+                      </div>
+
+                      <div className="vote-details">
+                        <span className={`vote-score vote-score-${vote.type}`}>
+                          {formatScore(vote.score)}
+                        </span>
+                        <span className="vote-date">
+                          {formatDate(vote.timestamp)}
+                        </span>
+                      </div>
                     </div>
 
-                    <div className="vote-details">
-                      <span className={`vote-score vote-score-${vote.type}`}>
-                        {formatScore(vote.score)}
-                      </span>
-                      <span className="vote-date">
-                        {formatDate(vote.timestamp)}
-                      </span>
-                    </div>
+                    <button
+                      className="delete-icon-btn"
+                      onClick={() => handleDelete(vote._id)}
+                      aria-label="Delete vote"
+                    >
+                      <Trash2 size={20} />
+                    </button>
                   </div>
-
-                  <button
-                    className="delete-icon-btn"
-                    onClick={() => handleDelete(vote._id)}
-                    aria-label="Delete vote"
+                ))}
+              </div>
+              
+              {votes.length > 5 && (
+                <div className="votes-footer">
+                  <Button
+                    variant="secondary"
+                    onClick={() => setShowAllVotes(!showAllVotes)}
+                    fullWidth
                   >
-                    <Trash2 size={20} />
-                  </button>
+                    {showAllVotes ? 'Show Less' : 'Show More'}
+                  </Button>
                 </div>
-              ))}
-            </div>
+              )}
+            </>
           )}
         </Card>
       </div>

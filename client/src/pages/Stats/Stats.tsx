@@ -79,7 +79,7 @@ const Stats = () => {
           className={`period-btn ${period === 'all' ? 'active' : ''}`}
           onClick={() => handlePeriodChange('all')}
         >
-          All Time
+          All
         </button>
       </div>
 
