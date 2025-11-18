@@ -9,7 +9,7 @@ import Button from '../../components/Button/Button';
 import Card from '../../components/Card/Card';
 import Input from '../../components/Input/Input';
 import { formatDate, formatScore } from '../../utils/helpers';
-import { Menu, X, ChevronUp, ChevronDown, Trash2 } from 'lucide-react';
+import { Menu, X, ChevronUp, ChevronDown, Trash2, Info, BarChart3, LogOut } from 'lucide-react';
 import ThemeToggle from '../../components/ThemeToggle/ThemeToggle';
 import protocol_ice from '../../assets/protocol-ice.png'
 
@@ -141,10 +141,21 @@ const Dashboard = () => {
           <Button
             variant="secondary"
             onClick={() => {
+              navigate('/about');
+              setShowMobileMenu(false);
+            }}
+          >
+            <Info size={18} />
+            About
+          </Button>
+          <Button
+            variant="secondary"
+            onClick={() => {
               navigate('/stats');
               setShowMobileMenu(false);
             }}
           >
+            <BarChart3 size={18} />
             View Stats
           </Button>
           <Button
@@ -154,6 +165,7 @@ const Dashboard = () => {
               setShowMobileMenu(false);
             }}
           >
+            <LogOut size={18} />
             Logout
           </Button>
         </div>

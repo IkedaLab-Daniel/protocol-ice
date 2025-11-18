@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
-import { TrendingUp, TrendingDown, Tag, BarChart3 } from 'lucide-react';
+import { TrendingUp, TrendingDown, Tag, BarChart3, Home } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
 import Button from '../../components/Button/Button';
 import Card from '../../components/Card/Card';
 import ThemeToggle from '../../components/ThemeToggle/ThemeToggle';
@@ -9,6 +10,7 @@ import './About.css';
 
 const About = () => {
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
 
   return (
     <div className="about-container page-container">
@@ -102,12 +104,21 @@ const About = () => {
               Start tracking your actions today and watch as small votes compound into remarkable results.
             </p>
             <div className="cta-buttons">
-              <Button onClick={() => navigate('/register')}>
-                Get Started
-              </Button>
-              <Button variant="secondary" onClick={() => navigate('/login')}>
-                Sign In
-              </Button>
+              {isAuthenticated ? (
+                <Button onClick={() => navigate('/dashboard')}>
+                  <Home size={18} />
+                  Back to Dashboard
+                </Button>
+              ) : (
+                <>
+                  <Button onClick={() => navigate('/register')}>
+                    Get Started
+                  </Button>
+                  <Button variant="secondary" onClick={() => navigate('/login')}>
+                    Sign In
+                  </Button>
+                </>
+              )}
             </div>
           </div>
         </Card>

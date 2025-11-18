@@ -6,7 +6,7 @@ import Loading from "../../components/Loading/Loading";
 import { calculatePercentage, formatDateShort, formatScore } from "../../utils/helpers";
 import Button from "../../components/Button/Button";
 import Card from "../../components/Card/Card";
-import { TrendingUp, ThumbsUp, ThumbsDown, Vote } from "lucide-react";
+import { TrendingUp, ThumbsUp, ThumbsDown, Vote, Info, Home } from "lucide-react";
 import ThemeToggle from "../../components/ThemeToggle/ThemeToggle";
 import protocol_ice from '../../assets/protocol-ice.png'
 import './Stats.css'
@@ -50,7 +50,12 @@ const Stats = () => {
         </div>
         <div className="stats-header-actions">
           <ThemeToggle />
+          <Button variant="secondary" onClick={() => navigate('/about')}>
+            <Info size={18} />
+            About
+          </Button>
           <Button variant="secondary" onClick={() => navigate('/dashboard')}>
+            <Home size={18} />
             Back to Dashboard
           </Button>
         </div>

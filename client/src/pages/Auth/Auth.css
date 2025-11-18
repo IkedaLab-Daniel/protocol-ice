@@ -5,6 +5,8 @@
   justify-content: center;
   padding: 2rem;
   position: relative;
+  background: var(--grid-background);
+  background-blend-mode: overlay;
 }
 
 .auth-theme-toggle {

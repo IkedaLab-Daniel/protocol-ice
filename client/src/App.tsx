@@ -37,11 +37,7 @@ function App() {
             {/* Public Routes Here */}
             <Route 
               path='/about'
-              element={
-                <PublicRoute>
-                  <About />
-                </PublicRoute>
-              }
+              element={<About />}
             />
             <Route 
               path='/login'

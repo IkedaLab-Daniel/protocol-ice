@@ -2,6 +2,8 @@
   min-height: 100vh;
   padding: 2rem;
   position: relative;
+  background: var(--grid-background);
+  background-blend-mode: overlay;
 }
 
 .dashboard-container::before {
