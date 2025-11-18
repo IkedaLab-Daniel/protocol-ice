@@ -189,19 +189,48 @@ const Dashboard = () => {
             <form onSubmit={handleSubmit} className="vote-form">
               <div className="form-group">
                 <label>Score</label>
-                <input
-                  type="number"
-                  min={1}
-                  max={5}
-                  value={formData.score}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      score: Number(e.target.value) || 1,
-                    })
-                  }
-                  className="number-input"
-                />
+                <div className="score-input-container">
+                  <button
+                    type="button"
+                    className="score-btn score-btn-minus"
+                    onClick={() =>
+                      setFormData({
+                        ...formData,
+                        score: Math.max(1, formData.score - 1),
+                      })
+                    }
+                    disabled={formData.score <= 1}
+                  >
+                    −
+                  </button>
+                  <input
+                    type="number"
+                    min={1}
+                    max={5}
+                    value={formData.score}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        score: Math.min(5, Math.max(1, Number(e.target.value) || 1)),
+                      })
+                    }
+                    className="number-input"
+                    readOnly
+                  />
+                  <button
+                    type="button"
+                    className="score-btn score-btn-plus"
+                    onClick={() =>
+                      setFormData({
+                        ...formData,
+                        score: Math.min(5, formData.score + 1),
+                      })
+                    }
+                    disabled={formData.score >= 5}
+                  >
+                    +
+                  </button>
+                </div>
               </div>
 
               <Input
