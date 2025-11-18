@@ -5,12 +5,60 @@
 }
 
 :root {
+  /* Light mode colors */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f9fafb;
+  --bg-tertiary: #f3f4f6;
+  --bg-quaternary: #e5e7eb;
+  
+  --text-primary: #1f2937;
+  --text-secondary: #6b7280;
+  --text-tertiary: #9ca3af;
+  
+  --border-color: #e5e7eb;
+  --border-color-light: #f3f4f6;
+  
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --shadow-color-md: rgba(0, 0, 0, 0.15);
+  
+  --gradient-bg-1: rgba(14, 165, 233, 0.08);
+  --gradient-bg-2: rgba(16, 185, 129, 0.08);
+  
+  /* Brand colors - remain same in both modes */
   --primary-color: #667eea;
   --success-color: #10b981;
   --danger-color: #ef4444;
-  --text-primary: #1f2937;
-  --text-secondary: #6b7280;
-  --background: #f9fafb;
+  --warning-color: #f59e0b;
+  
+  /* Gradient colors for cards */
+  --positive-gradient-start: #34d399;
+  --positive-gradient-mid: #10b981;
+  --positive-gradient-end: #059669;
+  
+  --negative-gradient-start: #f87171;
+  --negative-gradient-mid: #ef4444;
+  --negative-gradient-end: #dc2626;
+}
+
+[data-theme="dark"] {
+  /* Dark mode colors */
+  --bg-primary: #1f2937;
+  --bg-secondary: #111827;
+  --bg-tertiary: #374151;
+  --bg-quaternary: #4b5563;
+  
+  --text-primary: #f9fafb;
+  --text-secondary: #d1d5db;
+  --text-tertiary: #9ca3af;
+  
+  --border-color: #374151;
+  --border-color-light: #4b5563;
+  
+  --shadow-color: rgba(0, 0, 0, 0.5);
+  --shadow-color-md: rgba(0, 0, 0, 0.7);
+  
+  --gradient-bg-1: rgba(14, 165, 233, 0.15);
+  --gradient-bg-2: rgba(16, 185, 129, 0.15);
 }
 
 body {
@@ -22,6 +70,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
   color: var(--text-primary);
   line-height: 1.5;
+  background: var(--bg-secondary);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 #root {

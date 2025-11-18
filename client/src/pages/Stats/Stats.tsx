@@ -7,6 +7,8 @@ import { calculatePercentage, formatDateShort, formatScore } from "../../utils/h
 import Button from "../../components/Button/Button";
 import Card from "../../components/Card/Card";
 import { TrendingUp, ThumbsUp, ThumbsDown, Vote } from "lucide-react";
+import ThemeToggle from "../../components/ThemeToggle/ThemeToggle";
+import './Stats.css'
 
 const Stats = () => {
   const navigate = useNavigate()
@@ -42,9 +44,12 @@ const Stats = () => {
           <h1>Statistics</h1>
           <p>Your voting insights and analytics</p>
         </div>
-        <Button variant="secondary" onClick={() => navigate('/dashborad')}>
-          Back to Dashboard
-        </Button>
+        <div className="stats-header-actions">
+          <ThemeToggle />
+          <Button variant="secondary" onClick={() => navigate('/dashboard')}>
+            Back to Dashboard
+          </Button>
+        </div>
       </div>
 
       <div className="period-selector">

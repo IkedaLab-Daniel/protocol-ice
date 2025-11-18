@@ -10,6 +10,7 @@ import Card from '../../components/Card/Card';
 import Input from '../../components/Input/Input';
 import { formatDate, formatScore } from '../../utils/helpers';
 import { Menu, X, ChevronUp, ChevronDown, Trash2 } from 'lucide-react';
+import ThemeToggle from '../../components/ThemeToggle/ThemeToggle';
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -131,6 +132,7 @@ const Dashboard = () => {
 
         {/* Desktop & Mobile Menu */}
         <div className={`header-actions ${showMobileMenu ? 'show' : ''}`}>
+          <ThemeToggle />
           <Button
             variant="secondary"
             onClick={() => {
