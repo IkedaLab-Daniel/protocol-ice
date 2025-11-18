@@ -38,7 +38,7 @@ const Stats = () => {
     : 0;
 
   return (
-    <div className="stats-container">
+    <div className="stats-container page-container">
       <div className="stats-header">
         <div>
           <h1>Statistics</h1>

@@ -1,4 +1,5 @@
-import { Navigate, Route, BrowserRouter, Routes } from 'react-router-dom'
+import { Navigate, Route, BrowserRouter, Routes, useLocation } from 'react-router-dom'
+import { useEffect } from 'react'
 import './App.css'
 import { AuthProvider } from './context/AuthContext'
 import PublicRoute from './components/PublicRoute/PublicRoute'
@@ -8,11 +9,25 @@ import Register from './pages/Auth/Register'
 import Dashboard from './pages/Dashboard/Dashboard'
 import Stats from './pages/Stats/Stats'
 
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }, [pathname]);
+
+  return null;
+}
+
 function App() {
 
   return (
     <BrowserRouter>
       <AuthProvider>
+        <ScrollToTop />
         <Routes>
           {/* Public Routes Here */}
           <Route 

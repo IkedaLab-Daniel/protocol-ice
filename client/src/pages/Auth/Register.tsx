@@ -80,7 +80,7 @@ const Register = () => {
   };
 
   return (
-    <div className="auth-container">
+    <div className="auth-container page-container">
       <Card className="auth-card">
         <div className="auth-header">
           <h1>Create Account</h1>
