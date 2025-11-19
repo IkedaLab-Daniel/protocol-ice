@@ -74,8 +74,8 @@ const Register = () => {
       navigate('/dashboard');
     } catch (error: any) {
       console.error('Register error:', error);
-      const message = error.response?.data?.message || error.message || 'Registration failed. Please try again.';
-      setApiError(message);
+      // error.message is already formatted by AuthContext and API interceptor
+      setApiError(error.message || 'Registration failed. Please try again.');
     } finally {
       setLoading(false);
     }

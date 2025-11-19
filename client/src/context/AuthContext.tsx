@@ -84,7 +84,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
                 }
             }
         } catch (error: any) {
-            const message = error.response?.data?.message || 'Login failed';
+            // error.message is already set by the API interceptor for rate limits
+            const message = error.message || error.response?.data?.message || error.response?.data?.error || 'Login failed';
             throw new Error(message);
         }
     }
@@ -105,7 +106,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
                 }
             }
         } catch (error: any) {
-            const message = error.response?.data?.message || 'Registration failed';
+            // error.message is already set by the API interceptor for rate limits
+            const message = error.message || error.response?.data?.message || error.response?.data?.error || 'Registration failed';
             throw new Error(message);
         }
     }

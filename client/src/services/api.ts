@@ -38,15 +38,40 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   (error) => {
+    // Handle authentication errors (401)
     if (error.response?.status === 401) {
       const token = localStorage.getItem('token');
+      
+      // If user has a token but gets 401, it's expired - redirect to login
       if (token){
         localStorage.removeItem('token');
         localStorage.removeItem('user');
         window.location.href = '/login';
+      } else {
+        // If no token, it's invalid credentials during login/register
+        error.message = error.response.data?.message || 'Invalid credentials. Please check your email and password.';
       }
-        
     }
+    
+    // Handle rate limit errors (429)
+    if (error.response?.status === 429) {
+      const retryAfter = error.response.data?.retryAfter || 60;
+      const minutes = Math.floor(retryAfter / 60);
+      const seconds = retryAfter % 60;
+      
+      let timeMessage = '';
+      if (minutes > 0) {
+        timeMessage = minutes === 1 ? '1 minute' : `${minutes} minutes`;
+        if (seconds > 0) {
+          timeMessage += ` and ${seconds} seconds`;
+        }
+      } else {
+        timeMessage = `${seconds} seconds`;
+      }
+      
+      error.message = `${error.response.data?.error || 'Too many requests'}. Please try again in ${timeMessage}.`;
+    }
+    
     return Promise.reject(error);
   }
 );

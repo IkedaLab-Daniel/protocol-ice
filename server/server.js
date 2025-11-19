@@ -5,15 +5,21 @@ const cors = require('cors');
 const connectDB = require('./config/db');
 const votesRoute = require('./routes/votes');
 const authRoute = require('./routes/auth')
+const { globalLimiter, authLimiter, voteLimiter } = require('./middlewares/rateLimiter');
 
 require('dotenv').config();
 
 const PORT = process.env.PORT || 3000;
 const app = express();
 
+// If behind a proxy (Nginx, ALB), trust proxy to get correct client IP
+if (process.env.NODE_ENV === 'production') {
+  app.set('trust proxy', 1);
+}
+
 app.use(morgan('dev'))
 
-// > CORS Configuration - Allow all origins
+// > CORS Configuration - MUST be before rate limiters for proper error responses
 app.use(cors({
     origin: '*',
     credentials: false
@@ -22,11 +28,14 @@ app.use(cors({
 // > Middleware
 app.use(express.json());
 
-// > Routes
-// ? Vote Route
-app.use('/api/votes', votesRoute);
-// ? Auth Route
-app.use('/api/auth', authRoute);
+// Apply global rate limiter AFTER CORS
+app.use(globalLimiter)
+
+// > Routes with specific rate limiters
+// ? Auth Route - Strict rate limiting
+app.use('/api/auth', authLimiter, authRoute);
+// ? Vote Route - Moderate rate limiting
+app.use('/api/votes', voteLimiter, votesRoute);
 
 // ? Health Check
 app.get('/health', (req, res) => {
