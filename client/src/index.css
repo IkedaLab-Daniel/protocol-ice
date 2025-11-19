@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap');
+
 * {
   margin: 0;
   padding: 0;
@@ -45,6 +47,9 @@ html {
   --negative-gradient-start: #f87171;
   --negative-gradient-mid: #ef4444;
   --negative-gradient-end: #dc2626;
+
+  /* Font for logo */
+  --font-logo: "Merriweather", serif;
 }
 
 [data-theme="dark"] {

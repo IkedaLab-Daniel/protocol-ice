@@ -32,6 +32,7 @@
   margin-bottom: 1rem;
 }
 
+
 .auth-logo img {
   width: 5rem;
   height: 5rem;
@@ -51,6 +52,7 @@
   font-size: 2rem;
   font-weight: 700;
   color: var(--text-primary);
+  font-family: var(--font-logo);
   margin-bottom: 0.5rem;
 }
 
@@ -84,6 +86,13 @@
 
 .auth-link:hover {
   color: #764ba2;
+}
+
+.learn-more {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
 }
 
 .auth-learn-more {

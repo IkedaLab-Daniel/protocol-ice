@@ -75,6 +75,7 @@
   color: var(--text-primary);
   margin-bottom: 0.5rem;
   background-clip: text;
+  font-family: var(--font-logo);
 }
 
 .about-tagline {

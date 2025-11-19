@@ -16,7 +16,6 @@
 }
 
 .theme-toggle-btn:hover {
-  transform: scale(1.1) rotate(10deg);
   background: linear-gradient(135deg, #fbbf24, #f59e0b);
   border-color: #d97706;
   color: white;

@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { LogIn, Mail, Lock } from 'lucide-react';
+import { LogIn, Mail, Lock, Info } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import Input from '../../components/Input/Input';
 import Button from '../../components/Button/Button';
@@ -111,7 +111,8 @@ const Login = () => {
           </p>
         </div>
         <div className="auth-learn-more">
-          <Link to="/about" className="auth-link">
+          <Link to="/about" className="auth-link learn-more">
+            <Info size={16} />
             Learn more about Protocol Ice
           </Link>
         </div>

@@ -36,6 +36,7 @@
   font-weight: 700;
   color: var(--text-primary);
   margin-bottom: 0.25rem;
+  font-family: var(--font-logo);
 }
 
 .stats-header p {

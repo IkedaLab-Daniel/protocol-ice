@@ -1,6 +1,6 @@
 import './Auth.css'
 import { Link, useNavigate } from "react-router-dom";
-import { UserPlus, User, Mail, Lock, LockKeyhole } from 'lucide-react';
+import { UserPlus, User, Mail, Lock, LockKeyhole, Info } from 'lucide-react';
 import { useAuth } from "../../context/AuthContext";
 import { useState, type FormEvent } from "react";
 import { isValidEmail, isValidPassword, isValidUsername } from "../../utils/helpers";
@@ -165,7 +165,8 @@ const Register = () => {
           </p>
         </div>
         <div className="auth-learn-more">
-          <Link to="/about" className="auth-link">
+          <Link to="/about" className="auth-link learn-more">
+            <Info size={16} />
             Learn more about Protocol Ice
           </Link>
         </div>
